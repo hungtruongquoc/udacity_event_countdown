@@ -30,7 +30,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		195E5CFD2CFB2C8B00088711 /* Exceptions for "Event Countdown" folder in "Event CountdownTests" target */ = {
+		191294102CFDDE6400E332C0 /* Exceptions for "Event Countdown" folder in "Event CountdownTests" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Models/Event.swift,
@@ -43,7 +43,7 @@
 		195E5CCE2CFB2A7600088711 /* Event Countdown */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				195E5CFD2CFB2C8B00088711 /* Exceptions for "Event Countdown" folder in "Event CountdownTests" target */,
+				191294102CFDDE6400E332C0 /* Exceptions for "Event Countdown" folder in "Event CountdownTests" target */,
 			);
 			path = "Event Countdown";
 			sourceTree = "<group>";
