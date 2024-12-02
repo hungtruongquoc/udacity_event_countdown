@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var showingEventForm = false
-    
     var body: some View {
         NavigationStack {
             VStack {
@@ -18,22 +16,19 @@ struct ContentView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal)
                 List {
-                    /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Content@*/Text("Content")/*@END_MENU_TOKEN@*/
+                    Text("Content")
                 }
             }
             .background(Color(uiColor: .systemGroupedBackground))
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        showingEventForm = true
+                    NavigationLink {
+                        EventForm()
                     } label: {
                         Image(systemName: "plus")
                     }
                 }
             }
-            .sheet(isPresented: $showingEventForm) {
-               EventForm()
-           }
         }
     }
 }
