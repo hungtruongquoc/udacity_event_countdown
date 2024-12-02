@@ -37,6 +37,13 @@
 			);
 			target = 195E5CDB2CFB2A7700088711 /* Event CountdownTests */;
 		};
+		191294142CFDE7BE00E332C0 /* Exceptions for "Event Countdown" folder in "Event CountdownUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				EventForm.swift,
+			);
+			target = 195E5CE52CFB2A7700088711 /* Event CountdownUITests */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -44,6 +51,7 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				191294102CFDDE6400E332C0 /* Exceptions for "Event Countdown" folder in "Event CountdownTests" target */,
+				191294142CFDE7BE00E332C0 /* Exceptions for "Event Countdown" folder in "Event CountdownUITests" target */,
 			);
 			path = "Event Countdown";
 			sourceTree = "<group>";

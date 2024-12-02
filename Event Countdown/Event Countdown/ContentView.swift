@@ -31,6 +31,9 @@ struct ContentView: View {
                     }
                 }
             }
+            .sheet(isPresented: $showingEventForm) {
+               EventForm()
+           }
         }
     }
 }
