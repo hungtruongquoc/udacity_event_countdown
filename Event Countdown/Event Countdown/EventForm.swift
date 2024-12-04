@@ -20,6 +20,7 @@ struct EventForm: View {
     @State private var eventTime: Date = Date()
     @State private var titleColor: Color = .blue
     var mode: Mode
+    var onSave: (Event) -> Void
     
     var body: some View {
         Form {
@@ -63,6 +64,13 @@ struct EventForm: View {
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
                     // Add save logic here
+                    // Construct the Event and pass it to onSave
+                    let event = Event(
+                       title: eventTitle,
+                       date: eventDate,
+                       textColor: titleColor
+                    )
+                    onSave(event)
                     dismiss()
                 } label: {
                     Image(systemName: "checkmark")
@@ -78,8 +86,18 @@ struct EventForm: View {
     NavigationStack {
         // Test the form in both Add and Edit modes
         VStack {
-            EventForm(mode: .add)
-            EventForm(mode: .edit)
+            EventForm(
+                mode: .add,
+                onSave: { event in
+                    print("Saved event: \(event)")
+                }
+            )
+            EventForm(
+                mode: .edit,
+                onSave: { event in
+                    print("Updated event: \(event)")
+                }
+            )
         }
     }
 }

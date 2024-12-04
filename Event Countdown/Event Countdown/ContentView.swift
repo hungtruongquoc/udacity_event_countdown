@@ -25,7 +25,9 @@ struct ContentView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     NavigationLink {
-                        EventForm(mode: formMode)
+                        EventForm(mode: formMode, onSave: { newEvent in
+                            print("Saved Event")
+                        })
                     } label: {
                         Image(systemName: "plus")
                     }
