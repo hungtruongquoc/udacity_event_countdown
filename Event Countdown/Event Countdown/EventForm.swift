@@ -23,29 +23,27 @@ struct EventForm: View {
     
     var body: some View {
         Form {
-            Section(header: Text("Event Details")) {
-                TextField("Event Title", text: $eventTitle)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
+            TextField("Title", text: $eventTitle)
+                .textFieldStyle(PlainTextFieldStyle())
 
-                // Align "Date" label and pickers horizontally
-                HStack {
-                    Text("Date")
-                        .font(.headline)
-                        .foregroundColor(.secondary)
-                    
-                    Spacer()
-                    
-                    DatePicker("", selection: $eventDate, displayedComponents: .date)
-                        .datePickerStyle(.compact)
-                        .labelsHidden() // Hides the default label for DatePicker
-                    
-                    DatePicker("", selection: $eventTime, displayedComponents: .hourAndMinute)
-                        .datePickerStyle(.compact)
-                        .labelsHidden() // Hides the default label for DatePicker
-                }
-
-                ColorPicker("Title Color", selection: $titleColor)
+            // Align "Date" label and pickers horizontally
+            HStack {
+                Text("Date")
+                    .font(.headline)
+                    .foregroundColor(.secondary)
+                
+                Spacer()
+                
+                DatePicker("", selection: $eventDate, displayedComponents: .date)
+                    .datePickerStyle(.compact)
+                    .labelsHidden() // Hides the default label for DatePicker
+                
+                DatePicker("", selection: $eventTime, displayedComponents: .hourAndMinute)
+                    .datePickerStyle(.compact)
+                    .labelsHidden() // Hides the default label for DatePicker
             }
+
+            ColorPicker("Title Color", selection: $titleColor)
         }
         .navigationTitle(mode == .add ? "Add Event" : "Edit Event")
         .navigationBarTitleDisplayMode(.inline)
