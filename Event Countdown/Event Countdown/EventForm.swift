@@ -17,6 +17,7 @@ struct EventForm: View {
     @Environment(\.dismiss) private var dismiss
     @State private var eventTitle: String = ""
     @State private var eventDate: Date = Date()
+    @State private var eventTime: Date = Date()
     @State private var titleColor: Color = .blue
     var mode: Mode
     
@@ -26,8 +27,22 @@ struct EventForm: View {
                 TextField("Event Title", text: $eventTitle)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
 
-                DatePicker("Event Date", selection: $eventDate, displayedComponents: .date)
-                    .datePickerStyle(GraphicalDatePickerStyle())
+                // Align "Date" label and pickers horizontally
+                HStack {
+                    Text("Date")
+                        .font(.headline)
+                        .foregroundColor(.secondary)
+                    
+                    Spacer()
+                    
+                    DatePicker("", selection: $eventDate, displayedComponents: .date)
+                        .datePickerStyle(.compact)
+                        .labelsHidden() // Hides the default label for DatePicker
+                    
+                    DatePicker("", selection: $eventTime, displayedComponents: .hourAndMinute)
+                        .datePickerStyle(.compact)
+                        .labelsHidden() // Hides the default label for DatePicker
+                }
 
                 ColorPicker("Title Color", selection: $titleColor)
             }
