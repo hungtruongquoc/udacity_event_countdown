@@ -8,11 +8,13 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var formMode: EventForm.Mode = .add
     var body: some View {
         NavigationStack {
             VStack {
                 Text("Events")
                     .font(.title.bold())
+                    .foregroundColor(.blue)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal)
                 List {
@@ -23,7 +25,7 @@ struct ContentView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     NavigationLink {
-                        EventForm()
+                        EventForm(mode: formMode)
                     } label: {
                         Image(systemName: "plus")
                     }
