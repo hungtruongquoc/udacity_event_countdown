@@ -68,6 +68,7 @@ struct EventForm: View {
                     Image(systemName: "checkmark")
                         .fontWeight(.bold)
                 }
+                .disabled(eventTitle.isEmpty)
             }
         }
     }
