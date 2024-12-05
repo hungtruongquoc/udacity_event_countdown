@@ -40,26 +40,23 @@ struct ContentView: View {
             .background(Color(uiColor: .systemGroupedBackground))
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    NavigationLink {
-                        // Assign selectedEvent on navigation
-                        EventForm(
-                            eventTitle: Binding(get: { selectedEvent?.title ?? "" }, set: { selectedEvent?.title = $0 }),
-                            eventDate: Binding(get: { selectedEvent?.date ?? Date() }, set: { selectedEvent?.date = $0 }),
-                            titleColor: Binding(get: { selectedEvent?.textColor ?? .blue }, set: { selectedEvent?.textColor = $0 }),
-                            mode: .add,
-                            onSave: {
-                                if let newEvent = selectedEvent {
-                                    events.append(newEvent)
-                                }
-                                selectedEvent = nil
+                    NavigationLink(
+                        destination: {
+                            EventForm(
+                                mode: .add,
+                                eventTitle: "",
+                                eventDate: Date(),
+                                titleColor: .blue
+                            ) { title, date, color in
+                                // Add the new event to the list
+                                let newEvent = Event(title: title, date: date, textColor: color)
+                                events.append(newEvent)
                             }
-                        )
-                        .onAppear {
-                            selectedEvent = Event(title: "", date: Date(), textColor: .blue)
+                        },
+                        label: {
+                            Image(systemName: "plus")
                         }
-                    } label: {
-                        Image(systemName: "plus")
-                    }
+                    )
                 }
             }
         }

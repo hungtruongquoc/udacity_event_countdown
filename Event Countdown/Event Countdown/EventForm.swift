@@ -14,15 +14,28 @@ struct EventForm: View {
         case edit
     }
     
-    // Bindings for event properties
-    @Binding var eventTitle: String
-    @Binding var eventDate: Date
-    @Binding var titleColor: Color
+    // State variables for event properties
+    @State private var eventTitle: String
+    @State private var eventDate: Date
+    @State private var titleColor: Color
     
     var mode: Mode
-    var onSave: () -> Void // Callback to handle saving the event
-    // Dismiss environment
-   @Environment(\.dismiss) private var dismiss
+    var onSave: (String, Date, Color) -> Void // Callback to pass the updated values
+    @Environment(\.dismiss) private var dismiss // Dismiss environment variable
+    
+    init(
+        mode: Mode,
+        eventTitle: String,
+        eventDate: Date,
+        titleColor: Color,
+        onSave: @escaping (String, Date, Color) -> Void
+    ) {
+        self.mode = mode
+        self._eventTitle = State(initialValue: eventTitle)
+        self._eventDate = State(initialValue: eventDate)
+        self._titleColor = State(initialValue: titleColor)
+        self.onSave = onSave
+    }
     
     var body: some View {
         Form {
@@ -30,8 +43,8 @@ struct EventForm: View {
             TextField("Title", text: $eventTitle)
                 .foregroundColor(titleColor)
                 .textFieldStyle(PlainTextFieldStyle())
-
-            // Horizontal stack for date and time pickers
+            
+            // Date picker
             HStack {
                 Text("Date")
                     .font(.headline)
@@ -41,10 +54,10 @@ struct EventForm: View {
                 
                 DatePicker("", selection: $eventDate, displayedComponents: .date)
                     .datePickerStyle(.compact)
-                    .labelsHidden() // Hides the default label
+                    .labelsHidden()
             }
-
-            // Color picker for title color
+            
+            // Color picker
             ColorPicker("Title Color", selection: $titleColor)
         }
         .navigationTitle(mode == .add ? "Add Event" : "Edit Event")
@@ -53,8 +66,7 @@ struct EventForm: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button {
-                    // Dismiss the view
-                    dismiss()
+                    dismiss() // Dismiss to return to the previous view
                 } label: {
                     HStack(spacing: 5) {
                         Image(systemName: "chevron.left")
@@ -63,7 +75,10 @@ struct EventForm: View {
                 }
             }
             ToolbarItem(placement: .topBarTrailing) {
-                Button(action: onSave) {
+                Button(action: {
+                    onSave(eventTitle, eventDate, titleColor) // Pass updated values
+                    dismiss()
+                }) {
                     Image(systemName: "checkmark")
                         .fontWeight(.bold)
                 }
@@ -74,4 +89,14 @@ struct EventForm: View {
 }
 
 #Preview {
+    NavigationStack {
+        EventForm(
+            mode: .add,
+            eventTitle: "",
+            eventDate: Date(),
+            titleColor: .blue
+        ) { title, date, color in
+            print("Saved Event: \(title), \(date), \(color)")
+        }
+    }
 }
