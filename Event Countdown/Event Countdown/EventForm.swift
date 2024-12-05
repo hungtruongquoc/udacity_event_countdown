@@ -14,22 +14,22 @@ struct EventForm: View {
         case edit
     }
     
-    @Environment(\.dismiss) private var dismiss
-    @State private var eventTitle: String = ""
-    @State private var eventDate: Date = Date()
-    @State private var eventTime: Date = Date()
-    @State private var titleColor: Color = .blue
+    // Bindings for event properties
+    @Binding var eventTitle: String
+    @Binding var eventDate: Date
+    @Binding var titleColor: Color
     
     var mode: Mode
-    var onSave: (Event) -> Void
+    var onSave: () -> Void // Callback to handle saving the event
     
     var body: some View {
         Form {
+            // Title text field
             TextField("Title", text: $eventTitle)
                 .foregroundColor(titleColor)
                 .textFieldStyle(PlainTextFieldStyle())
 
-            // Align "Date" label and pickers horizontally
+            // Horizontal stack for date and time pickers
             HStack {
                 Text("Date")
                     .font(.headline)
@@ -39,13 +39,10 @@ struct EventForm: View {
                 
                 DatePicker("", selection: $eventDate, displayedComponents: .date)
                     .datePickerStyle(.compact)
-                    .labelsHidden() // Hides the default label for DatePicker
-                
-                DatePicker("", selection: $eventTime, displayedComponents: .hourAndMinute)
-                    .datePickerStyle(.compact)
-                    .labelsHidden() // Hides the default label for DatePicker
+                    .labelsHidden() // Hides the default label
             }
 
+            // Color picker for title color
             ColorPicker("Title Color", selection: $titleColor)
         }
         .navigationTitle(mode == .add ? "Add Event" : "Edit Event")
@@ -54,8 +51,7 @@ struct EventForm: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button {
-                    // Add save logic here
-                    dismiss()
+                    // Dismiss the view
                 } label: {
                     HStack(spacing: 5) {
                         Image(systemName: "chevron.left")
@@ -64,42 +60,16 @@ struct EventForm: View {
                 }
             }
             ToolbarItem(placement: .topBarTrailing) {
-                Button {
-                    // Add save logic here
-                    // Construct the Event and pass it to onSave
-                    let event = Event(
-                       title: eventTitle,
-                       date: eventDate,
-                       textColor: titleColor
-                    )
-                    onSave(event)
-                    dismiss()
-                } label: {
+                Button(action: onSave) {
                     Image(systemName: "checkmark")
                         .fontWeight(.bold)
                 }
-                .disabled(eventTitle.isEmpty)
+                .disabled(eventTitle.isEmpty) // Disable save button if title is empty
             }
         }
     }
 }
 
 #Preview {
-    NavigationStack {
-        // Test the form in both Add and Edit modes
-        VStack {
-            EventForm(
-                mode: .add,
-                onSave: { event in
-                    print("Saved event: \(event)")
-                }
-            )
-            EventForm(
-                mode: .edit,
-                onSave: { event in
-                    print("Updated event: \(event)")
-                }
-            )
-        }
-    }
+    
 }
