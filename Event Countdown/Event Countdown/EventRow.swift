@@ -10,6 +10,10 @@ import SwiftUI
 struct EventRow: View {
     var event: Event // Event data for this row
     
+    // Timer to trigger updates for real-time countdown
+    @State private var relativeDateString: String = ""
+    private let timer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
+        
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
             // Event title with dynamic text color
@@ -18,12 +22,21 @@ struct EventRow: View {
                 .foregroundColor(event.textColor)
             
             // Relative date using RelativeDateTimeFormatter
-            Text(relativeDate(for: event.date))
+            Text(relativeDateString)
                 .font(.subheadline)
                 .foregroundColor(.secondary)
                 .id(event.date) // Ensure updates in real time
         }
         .padding(.vertical, 8)
+        .onAppear { updateRelativeDate() }
+        .onReceive(timer) { _ in
+            updateRelativeDate()
+        }
+    }
+    
+    // Function to calculate and update the relative date string
+    private func updateRelativeDate() {
+        relativeDateString = relativeDate(for: event.date)
     }
     
     // Function to format the relative date
