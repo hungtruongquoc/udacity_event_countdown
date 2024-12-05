@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct Event: Identifiable, Comparable {
+struct Event: Identifiable, Comparable, Hashable {
     let id: UUID
     var title: String
     var date: Date
@@ -27,7 +27,10 @@ struct Event: Identifiable, Comparable {
     }
     
     static func == (lhs: Event, rhs: Event) -> Bool {
-        lhs.id == rhs.id
+        lhs.id == rhs.id &&
+        lhs.title == rhs.title &&
+        lhs.date == rhs.date &&
+        lhs.textColor == rhs.textColor
     }
 }
 

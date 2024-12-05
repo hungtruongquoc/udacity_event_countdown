@@ -11,7 +11,7 @@ struct ContentView: View {
     @State private var formMode: EventForm.Mode = .add
     @State private var events: [Event] = [] // List of events
     @State private var selectedEvent: Event? = nil // Selected event for editing
-    @State private var isEditing: Bool = false // Flag for add/edit mode
+    @State private var isAddingEvent: Bool = false // Flag for add/edit mode
     
     var body: some View {
         NavigationStack {
@@ -27,6 +27,12 @@ struct ContentView: View {
             .background(Color(uiColor: .systemGroupedBackground))
             .toolbar {
                 addButton
+            }
+            .navigationDestination(isPresented: $isAddingEvent) {
+                addEventView
+            }
+            .navigationDestination(for: Event.self) { event in
+                editEventView(for: event)
             }
         }
     }
@@ -64,7 +70,7 @@ extension ContentView {
     private var eventListView: some View {
         List {
             ForEach(events.sorted(by: { $0.date < $1.date }), id: \.id) { event in
-                NavigationLink(destination: editEventView(for: event)) {
+                NavigationLink(value: event) {
                     EventRow(event: event)
                 }
             }
@@ -75,12 +81,11 @@ extension ContentView {
     // Toolbar Button
     private var addButton: some ToolbarContent {
         ToolbarItem(placement: .topBarTrailing) {
-            NavigationLink(
-                destination: addEventView,
-                label: {
-                    Image(systemName: "plus")
-                }
-            )
+            Button {
+                isAddingEvent = true
+            } label: {
+                Image(systemName: "plus")
+            }
         }
     }
     
@@ -94,6 +99,7 @@ extension ContentView {
         ) { title, date, color in
             let newEvent = Event(title: title, date: date, textColor: color)
             events.append(newEvent)
+            isAddingEvent = false
         }
     }
     
@@ -105,8 +111,11 @@ extension ContentView {
             eventDate: event.date,
             titleColor: event.textColor
         ) { title, date, color in
-            if let index = events.firstIndex(where: { $0.id == event.id }) {
-                events[index] = Event(id: event.id, title: title, date: date, textColor: color)
+            events = events.map { existingEvent in
+                if existingEvent.id == event.id {
+                    return Event(id: event.id, title: title, date: date, textColor: color)
+                }
+                return existingEvent
             }
         }
     }
