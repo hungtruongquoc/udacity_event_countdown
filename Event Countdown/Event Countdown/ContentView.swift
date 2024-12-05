@@ -34,7 +34,24 @@ struct ContentView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                 }
                 else {
-                    
+                    List {
+                        ForEach(events, id: \.id) { event in
+                            let destination = EventForm(
+                                mode: .edit,
+                                eventTitle: event.title,
+                                eventDate: event.date,
+                                titleColor: event.textColor
+                            ) { title, date, color in
+                                if let index = events.firstIndex(where: { $0.id == event.id }) {
+                                    events[index] = Event(id: event.id, title: title, date: date, textColor: color)
+                                }
+                            }
+                            
+                            NavigationLink(destination: destination) {
+                                EventRow(event: event)
+                            }
+                        }
+                    }
                 }
             }
             .background(Color(uiColor: .systemGroupedBackground))
