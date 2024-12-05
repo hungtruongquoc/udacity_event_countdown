@@ -21,6 +21,8 @@ struct EventForm: View {
     
     var mode: Mode
     var onSave: () -> Void // Callback to handle saving the event
+    // Dismiss environment
+   @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         Form {
@@ -52,6 +54,7 @@ struct EventForm: View {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button {
                     // Dismiss the view
+                    dismiss()
                 } label: {
                     HStack(spacing: 5) {
                         Image(systemName: "chevron.left")
@@ -71,5 +74,4 @@ struct EventForm: View {
 }
 
 #Preview {
-    
 }
