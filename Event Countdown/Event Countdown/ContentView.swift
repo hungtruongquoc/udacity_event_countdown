@@ -71,7 +71,7 @@ extension ContentView {
     // Event List View
     private var eventListView: some View {
         List {
-            ForEach(events.sorted(by: { $0.date < $1.date }), id: \.id) { event in
+            ForEach(events.sorted(), id: \.id) { event in
                 NavigationLink(value: event) {
                     EventRow(event: event)
                 }
