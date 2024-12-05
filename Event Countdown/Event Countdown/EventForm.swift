@@ -18,6 +18,8 @@ struct EventForm: View {
     @State private var eventTitle: String
     @State private var eventDate: Date
     @State private var titleColor: Color
+    // Static navigation title
+    private let constantTitle: String
     
     var mode: Mode
     var onSave: (String, Date, Color) -> Void // Callback to pass the updated values
@@ -34,6 +36,7 @@ struct EventForm: View {
         self._eventTitle = State(initialValue: eventTitle)
         self._eventDate = State(initialValue: eventDate)
         self._titleColor = State(initialValue: titleColor)
+        self.constantTitle = eventTitle
         self.onSave = onSave
     }
     
@@ -63,7 +66,7 @@ struct EventForm: View {
             // Color picker
             ColorPicker("Title Color", selection: $titleColor)
         }
-        .navigationTitle(mode == .add ? "Add Event" : "Edit \(eventTitle)")
+        .navigationTitle(mode == .add ? "Add Event" : "Edit \(constantTitle)")
         .lineLimit(1) // Restrict to a single line
         .truncationMode(.tail) // Truncate with "..."
         .navigationBarTitleDisplayMode(.inline)
