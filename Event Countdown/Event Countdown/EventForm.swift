@@ -63,7 +63,9 @@ struct EventForm: View {
             // Color picker
             ColorPicker("Title Color", selection: $titleColor)
         }
-        .navigationTitle(mode == .add ? "Add Event" : "Edit Event")
+        .navigationTitle(mode == .add ? "Add Event" : "Edit \(eventTitle)")
+        .lineLimit(1) // Restrict to a single line
+        .truncationMode(.tail) // Truncate with "..."
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarBackButtonHidden(true)
         .toolbar {
