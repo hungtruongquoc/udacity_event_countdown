@@ -22,7 +22,7 @@ struct EventForm: View {
     private let constantTitle: String
     
     var mode: Mode
-    var onSave: (String, Date, Color) -> Void // Callback to pass the updated values
+    var onSave: (Event) -> Void // Callback to pass the updated values
     @Environment(\.dismiss) private var dismiss // Dismiss environment variable
     
     init(
@@ -30,7 +30,7 @@ struct EventForm: View {
         eventTitle: String,
         eventDate: Date,
         titleColor: Color,
-        onSave: @escaping (String, Date, Color) -> Void
+        onSave: @escaping (Event) -> Void
     ) {
         self.mode = mode
         self._eventTitle = State(initialValue: eventTitle)
@@ -84,7 +84,9 @@ struct EventForm: View {
             }
             ToolbarItem(placement: .topBarTrailing) {
                 Button(action: {
-                    onSave(eventTitle, eventDate, titleColor) // Pass updated values
+                    // Create and pass an Event object
+                    let event = Event(title: eventTitle, date: eventDate, textColor: titleColor)
+                    onSave(event) // Pass updated values
                     dismiss()
                 }) {
                     Image(systemName: "checkmark")
@@ -97,14 +99,4 @@ struct EventForm: View {
 }
 
 #Preview {
-    NavigationStack {
-        EventForm(
-            mode: .add,
-            eventTitle: "",
-            eventDate: Date(),
-            titleColor: .blue
-        ) { title, date, color in
-            print("Saved Event: \(title), \(date), \(color)")
-        }
-    }
 }

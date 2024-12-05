@@ -98,8 +98,7 @@ extension ContentView {
             eventTitle: "",
             eventDate: Date(),
             titleColor: .blue
-        ) { title, date, color in
-            let newEvent = Event(title: title, date: date, textColor: color)
+        ) { newEvent in
             events.append(newEvent)
             isAddingEvent = false
         }
@@ -112,10 +111,10 @@ extension ContentView {
             eventTitle: event.title,
             eventDate: event.date,
             titleColor: event.textColor
-        ) { title, date, color in
+        ) { updatedEvent in
             events = events.map { existingEvent in
                 if existingEvent.id == event.id {
-                    return Event(id: event.id, title: title, date: date, textColor: color)
+                    return Event(id: updatedEvent.id, title: updatedEvent.title, date: updatedEvent.date, textColor: updatedEvent.textColor)
                 }
                 return existingEvent
             }
