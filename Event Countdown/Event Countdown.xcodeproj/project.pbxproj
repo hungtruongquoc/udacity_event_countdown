@@ -41,6 +41,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				EventForm.swift,
+				EventRow.swift,
 			);
 			target = 195E5CE52CFB2A7700088711 /* Event CountdownUITests */;
 		};

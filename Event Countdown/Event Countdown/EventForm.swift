@@ -19,12 +19,14 @@ struct EventForm: View {
     @State private var eventDate: Date = Date()
     @State private var eventTime: Date = Date()
     @State private var titleColor: Color = .blue
+    
     var mode: Mode
     var onSave: (Event) -> Void
     
     var body: some View {
         Form {
             TextField("Title", text: $eventTitle)
+                .foregroundColor(titleColor)
                 .textFieldStyle(PlainTextFieldStyle())
 
             // Align "Date" label and pickers horizontally
