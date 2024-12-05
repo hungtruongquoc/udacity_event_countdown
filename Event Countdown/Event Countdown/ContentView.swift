@@ -35,7 +35,7 @@ struct ContentView: View {
                 }
                 else {
                     List {
-                        ForEach(events, id: \.id) { event in
+                        ForEach(events.sorted(by: { $0.date < $1.date }), id: \.id) { event in
                             let destination = EventForm(
                                 mode: .edit,
                                 eventTitle: event.title,
