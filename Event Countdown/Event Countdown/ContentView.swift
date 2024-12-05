@@ -51,6 +51,9 @@ struct ContentView: View {
                                 EventRow(event: event)
                             }
                         }
+                        .onDelete { indexSet in
+                            events.remove(atOffsets: indexSet)
+                        }
                     }
                 }
             }
