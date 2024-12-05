@@ -59,9 +59,11 @@ extension ContentView {
                 .font(.headline)
                 .foregroundColor(.secondary)
                 .padding(.bottom, 4)
-            Text("Tap the + button to create a new event.")
-                .font(.subheadline)
-                .foregroundColor(.secondary)
+            Button(action: { isAddingEvent = true }) {
+                Text("Tap here to add your first event.")
+                    .font(.subheadline)
+                    .foregroundColor(.blue)
+            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
     }
