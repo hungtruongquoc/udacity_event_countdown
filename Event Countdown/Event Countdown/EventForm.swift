@@ -55,6 +55,9 @@ struct EventForm: View {
                 DatePicker("", selection: $eventDate, displayedComponents: .date)
                     .datePickerStyle(.compact)
                     .labelsHidden()
+                DatePicker("", selection: $eventDate, displayedComponents: .hourAndMinute)
+                    .datePickerStyle(.compact)
+                    .labelsHidden()
             }
             
             // Color picker
